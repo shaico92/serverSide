@@ -12,7 +12,7 @@ const app = express();
 
 
 
-mongoose.connect('mongodb://localhost:27017/burgersDB1',{useNewUrlParser: true ,useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/burgersDB',{useNewUrlParser: true ,useUnifiedTopology: true});
 
 
 

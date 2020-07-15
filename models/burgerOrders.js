@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 const burgerOrderSchema = new mongoose.Schema({
@@ -22,6 +22,6 @@ const burgerOrderSchema = new mongoose.Schema({
 });
 
 
-const BurgerOrder = new mongoose.model('BurgerOrder',burgerOrderSchema);
+const BurgerOrder = new mongoose.model('Burger_Order',burgerOrderSchema);
 
 module.exports = BurgerOrder;
