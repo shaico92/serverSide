@@ -29,7 +29,8 @@ router.use((req, res, next)=> {
             cheese : 1,
             // pickels : 1,
             meat : 1
-        }
+        },
+        totalPrice : 8.47
     }
     const newObj = new BurgerIngredients(obj);
     newObj.save(()=>{
@@ -72,7 +73,9 @@ router.post('/',(req,res)=>{
 router.get('/',(req,res)=>{
     
     getIngridinets();
+    
     res.send(ingridients)
+    
 })
 
 
