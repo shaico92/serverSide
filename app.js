@@ -37,7 +37,7 @@ app.use(express.json());
 
 
 
-app.use('/checkout',burgerOrderRoutes);
+app.use('/',burgerOrderRoutes);
 
 
 
