@@ -5,6 +5,7 @@ const burgerOrderSchema = new mongoose.Schema({
     
      customer : {
          name : String,
+         email : String,
          address : {
              street : String,
              zipcode : Number,

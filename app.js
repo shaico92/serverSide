@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const log = require('clg-color')
 const burgerOrderRoutes = require('./routes/burgerOrder');
+const ingridientsLoader = require('./routes/ingridientsLoader');
 
 let dbStatus = false;
 
@@ -36,8 +37,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
+app.use('/',ingridientsLoader)
+app.use('/checkout',burgerOrderRoutes);
+app.listen(5000,()=>{
+    console.log("Burger server is up")
+})
 
-app.use('/',burgerOrderRoutes);
+
 
 
 
@@ -47,9 +53,6 @@ app.use('/',burgerOrderRoutes);
 
 
     
-    app.listen(5000,()=>{
-        console.log("Burger server is up")
-    })
 
 
 
