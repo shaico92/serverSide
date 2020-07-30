@@ -15,6 +15,46 @@ router.use((req, res, next)=> {
     };
     next();
   });
+  const ingridinetsCalculator=(obj)=>{
+    let price =0;
+    for (const key in obj.ings) {
+        
+         let   count=obj.ings[key];
+      
+
+      switch (key) {
+          case 'salad':
+              if (count>0) {
+                 count= count*0.5
+              }
+              price=price+count;
+              break;
+
+              case 'cheese':
+                if (count>0) {
+                    count= count*1.32
+                 }
+                 price=price+count;
+                break;
+                case 'meat':
+                    if (count>0) {
+                        count= count*4.52
+                     }
+                     price=price+count;
+              break;
+              case 'bacon':
+                if (count>0) {
+                    count= count*2.15
+                 }
+                 price=price+count;
+              break; 
+          default:
+              break;
+      }
+
+    }
+    return price;
+}
   const addingOrderToDB = (req) =>{
 
     const reqObjToAdd = {
@@ -30,7 +70,7 @@ router.use((req, res, next)=> {
         },
         
         ingridients : req.body.ings,
-        price : req.body.price
+        totalPrice : +ingridinetsCalculator(req.body)
 
     }
 

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const log = require('clg-color')
 const burgerOrderRoutes = require('./routes/burgerOrder');
 const ingridientsLoader = require('./routes/ingridientsLoader');
-
+const burgerOrders = require('./routes/burgerOrders');
 let dbStatus = false;
 
 
@@ -38,6 +38,7 @@ app.use(express.json());
 
 
 app.use('/',ingridientsLoader)
+app.use('/orders',burgerOrders)
 app.use('/checkout',burgerOrderRoutes);
 app.listen(5000,()=>{
     console.log("Burger server is up")

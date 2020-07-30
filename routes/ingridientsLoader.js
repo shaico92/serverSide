@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router({mergeParams : true});
-const BurgerOrder = require('../models/burgerOrders')
+
 const BurgerIngredients = require('../models/burgerIngredients');
+
 
 let currentIngredientsID = null;
 
@@ -12,8 +13,49 @@ router.use((req, res, next)=> {
     next();
   });
 
+  const ingridinetsCalculator=(obj)=>{
+    let price =0;
+    for (const key in obj.ingridients) {
+        
+         let   count=obj.ingridients[key];
+      
 
-  function addingridientsToDB(){
+      switch (key) {
+          case 'salad':
+              if (count>0) {
+                 count= count*0.5
+              }
+              price=price+count;
+              break;
+
+              case 'cheese':
+                if (count>0) {
+                    count= count*1.32
+                 }
+                 price=price+count;
+                break;
+                case 'meat':
+                    if (count>0) {
+                        count= count*4.52
+                     }
+                     price=price+count;
+              break;
+              case 'bacon':
+                if (count>0) {
+                    count= count*2.15
+                 }
+                 price=price+count;
+              break; 
+          default:
+              break;
+      }
+
+    }
+    return price;
+}
+  
+  const addingridientsToDB=()=>{
+      
     BurgerIngredients.remove({},(err)=>{
         if (err) {
             console.log(err)
@@ -24,14 +66,17 @@ router.use((req, res, next)=> {
     const obj = {
         
         ingridients : {
-            salad: 1,
-            bacon : 1,
-            cheese : 1,
+            salad: 0,
+            bacon : 0,
+            cheese : 0,
             // pickels : 1,
             meat : 1
         },
-        totalPrice : 8.47
+        totalPrice : null
     }
+   obj.totalPrice=  ingridinetsCalculator(obj);
+  console.log(obj.totalPrice)
+
     const newObj = new BurgerIngredients(obj);
     newObj.save(()=>{
         
@@ -39,10 +84,26 @@ router.use((req, res, next)=> {
     });
     currentIngredientsID=   newObj._id;
 }
-
+const  getIngridinets =()=>{
+    
+    BurgerIngredients.findById(currentIngredientsID,(err, ings)=> {
+        if (err) {
+            console.log(err);
+            
+        } else {
+            
+            
+            ingridients= ings;
+            ingridinetsCalculator(ingridients);
+            
+            
+        }
+    })
+    
+}
 addingridientsToDB();
 console.log('current id in db is =='+currentIngredientsID)
-
+ 
 
 
 
@@ -55,25 +116,27 @@ console.log('current id in db is =='+currentIngredientsID)
 router.get('/',(req,res)=>{
     
     getIngridinets();
-    console.log(ingridients)
-    res.send(ingridients)
+    
+    
+                res.send(ingridients)    
+    
+                
+    
     
 })
 
-const getIngridinets =()=>{
-    BurgerIngredients.findById(currentIngredientsID,(err, ings)=> {
-        if (err) {
-            console.log(err);
-            
-        } else {
-            
-            ingridients = ings;
-            
-            ;
-            
-            
-        }
-    })
-}
+
+router.get('/ssss',(req,res)=>{
+    
+    
+    ingridinetsCalculator();
+                res.send('lol')    
+    
+                
+    
+    
+})
+
+
 
 module.exports =router;
