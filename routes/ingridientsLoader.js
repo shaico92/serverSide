@@ -72,10 +72,10 @@ router.use((req, res, next)=> {
             // pickels : 1,
             meat : 1
         },
-        totalPrice : null
+        totalPrice : 1
     }
    obj.totalPrice=  ingridinetsCalculator(obj);
-  console.log(obj.totalPrice)
+  
 
     const newObj = new BurgerIngredients(obj);
     newObj.save(()=>{
