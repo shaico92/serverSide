@@ -6,7 +6,7 @@ const BurgerIngredients = require('../models/burgerIngredients');
 
 let currentIngredientsID = null;
 
-let ingridients = null;
+let ingridients = {};
 router.use((req, res, next)=> {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -114,11 +114,21 @@ console.log('current id in db is =='+currentIngredientsID)
 
 
 router.get('/',(req,res)=>{
+    getIngridinets();    
+    if (!Object.keys(ingridients).length) {
+        console.log('bad ingridients')
+        getIngridinets();    
+        res.redirect('/');        
+        
+    }else{
+        console.log('sucess ingridients')
+        res.send(ingridients)    
+    }
     
-    getIngridinets();
     
     
-                res.send(ingridients)    
+    
+                
     
                 
     

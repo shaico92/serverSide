@@ -5,10 +5,18 @@ const BurgerOrder = require('../models/burgerOrders');
 let orders={};
 
 router.get('/',(req,res)=>{
-getBurgerOrders();
-console.log('sucess')
+    getBurgerOrders();
+    if (Object.keys(orders).length>0) {
+        console.log('sucess')
+        getBurgerOrders();
 
-res.send(orders);
+        res.send(orders);        
+    }else{
+        
+        res.redirect('/orders');        
+    }
+    
+
 
 
 });
@@ -22,6 +30,7 @@ getBurgerOrders=()=>{
                             
         } else {
              
+            
             orders={order}
         }
     })
